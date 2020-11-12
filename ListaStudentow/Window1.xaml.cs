@@ -50,6 +50,7 @@ namespace ListaStudentow
         private void DodajObraz(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Image files (*.png;*.jpeg;*.jpg)|*.png;*.jpeg;*.jpg|All files (*.*)|*.*";
             if (openFileDialog.ShowDialog() == true)
             {
                 Uri fileUri = new Uri(openFileDialog.FileName);
@@ -61,10 +62,10 @@ namespace ListaStudentow
                 {
                     encoder.Save(stream);
                 }
+                string zrobienieTegoWymagaloDuzoPracy = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+                Uri fileUri2 = new Uri(zrobienieTegoWymagaloDuzoPracy + "/src/" + MainWindow.studenci.Count + ".jpg");
+                Avatar.Source = new BitmapImage(fileUri2);
             }
-            string zrobienieTegoWymagaloDuzoPracy = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-            Uri fileUri2 = new Uri(zrobienieTegoWymagaloDuzoPracy+"/src/"+MainWindow.studenci.Count+".jpg");
-            Avatar.Source = new BitmapImage(fileUri2);
         }
     }
 }

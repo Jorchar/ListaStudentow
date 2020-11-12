@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
@@ -51,10 +52,21 @@ namespace ListaStudentow
         private void DodajObraz(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Image files (*.png;*.jpeg;*.jpg)|*.png;*.jpeg;*.jpg|All files (*.*)|*.*";
             if (openFileDialog.ShowDialog() == true)
             {
                 Uri fileUri = new Uri(openFileDialog.FileName);
-                Avatar.Source = new BitmapImage(fileUri);
+                BitmapImage zdjecie = new BitmapImage(fileUri);
+                var encoder = new JpegBitmapEncoder();
+                encoder.Frames.Add(BitmapFrame.Create(zdjecie));
+                encoder.QualityLevel = 100;
+                using (var stream = new FileStream("src/" + MainWindow.studenci.Count + ".jpg", FileMode.Create))
+                {
+                    encoder.Save(stream);
+                }
+                string zrobienieTegoWymagaloDuzoPracy = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+                Uri fileUri2 = new Uri(zrobienieTegoWymagaloDuzoPracy + "/src/" + MainWindow.studenci.Count + ".jpg");
+                Avatar.Source = new BitmapImage(fileUri2);
             }
         }
     }
