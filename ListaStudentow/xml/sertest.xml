@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<ArrayOfStudent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Student>
+    <Imie>asd</Imie>
+    <Wiek>12</Wiek>
+    <Pesel>12</Pesel>
+    <AvatarSrc>file:///C:/Users/Browarus/source/repos/ListaStudentow/ListaStudentow/bin/Debug/src/0.jpg</AvatarSrc>
+  </Student>
+  <Student>
+    <Imie>asdf</Imie>
+    <Wiek>123</Wiek>
+    <Pesel>125</Pesel>
+    <AvatarSrc>file:///C:/Users/Browarus/source/repos/ListaStudentow/ListaStudentow/bin/Debug/src/1.jpg</AvatarSrc>
+  </Student>
+</ArrayOfStudent>
