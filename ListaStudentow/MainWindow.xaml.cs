@@ -39,13 +39,12 @@ namespace ListaStudentow
         
         private void Button_Click2(object sender, RoutedEventArgs e)
         {
-
             XmlSerializer ser = new XmlSerializer(typeof(List<Student>));
-
             using (FileStream fs = new FileStream("../../xml/sertest.xml", FileMode.Create))
             {
                     ser.Serialize(fs, studenci);
             }
+            MessageBox.Show("Zapisano listę do pliku XML w folderze projektu");
         }
 
         private void listView_Click(object sender, MouseButtonEventArgs e)
@@ -61,6 +60,7 @@ namespace ListaStudentow
         private void Button_Click1(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "XML Files|*.xml";
             if (openFileDialog.ShowDialog() == true)
             {
                 var mySerializer = new XmlSerializer(typeof(List<Student>));

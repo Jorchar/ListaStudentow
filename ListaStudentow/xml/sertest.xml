@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<ArrayOfStudent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Student>
+    <Imie>as</Imie>
+    <Wiek>1425</Wiek>
+    <Pesel>12</Pesel>
+    <AvatarSrc>file:///C:/Users/Browarus/source/repos/ListaStudentow/ListaStudentow/bin/Debug/src/0.jpg</AvatarSrc>
+  </Student>
+</ArrayOfStudent>
