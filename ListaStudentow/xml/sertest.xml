@@ -3,13 +3,13 @@
   <Student>
     <Imie>asd</Imie>
     <Wiek>123</Wiek>
-    <Pesel>123</Pesel>
+    <Pesel>1234</Pesel>
     <AvatarSrc>src\0.jpg</AvatarSrc>
   </Student>
   <Student>
     <Imie>dsa</Imie>
-    <Wiek>321</Wiek>
-    <Pesel>21</Pesel>
+    <Wiek>32</Wiek>
+    <Pesel>3214</Pesel>
     <AvatarSrc>src\1.jpg</AvatarSrc>
   </Student>
 </ArrayOfStudent>
