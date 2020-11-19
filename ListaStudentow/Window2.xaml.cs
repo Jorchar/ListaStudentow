@@ -44,10 +44,11 @@ namespace ListaStudentow
             Imie.Text = MainWindow.studenci[klucz].Imie;
             Wiek.Text = MainWindow.studenci[klucz].Wiek;
             PESEL.Text = MainWindow.studenci[klucz].Pesel;
+            string zrobienieTegoWymagaloDuzoPracy = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
             bi.UriSource = null;
             bi.BeginInit();
             bi.CacheOption = BitmapCacheOption.OnLoad;
-            bi.UriSource = new Uri(MainWindow.studenci[klucz].AvatarSrc);
+            bi.UriSource = new Uri(zrobienieTegoWymagaloDuzoPracy +"\\"+ MainWindow.studenci[klucz].AvatarSrc);
             bi.EndInit();
             Avatar.Source = bi;
             StackPanel1.Children.Add(Avatar);
@@ -79,8 +80,7 @@ namespace ListaStudentow
                 MessageBox.Show("Obraz jest aktualnie uzywany przez inny program i nie można go skopiowac");
             }
             string zrobienieTegoWymagaloDuzoPracy = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-            Uri fileUri2 = new Uri(zrobienieTegoWymagaloDuzoPracy + "/src/" + klucz + ".jpg");
-            MainWindow.studenci[klucz].AvatarSrc = zrobienieTegoWymagaloDuzoPracy + "/src/" + klucz + ".jpg";
+            MainWindow.studenci[klucz].AvatarSrc = "src\\" + klucz + ".jpg";
             this.Close();
         }
 

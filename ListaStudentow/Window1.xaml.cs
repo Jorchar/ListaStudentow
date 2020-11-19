@@ -47,7 +47,7 @@ namespace ListaStudentow
                 stream.Close();
             }
             string zrobienieTegoWymagaloDuzoPracy = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-            dane4 = zrobienieTegoWymagaloDuzoPracy + "\\src\\" + MainWindow.studenci.Count + ".jpg";
+            dane4 = "src\\" + MainWindow.studenci.Count + ".jpg";
 
             if (dane2.All(char.IsNumber) && dane3.All(char.IsNumber) && dane1.All(char.IsLetter)){
                 MainWindow.studenci.Add(new Student() { Imie = dane1, Wiek = dane2, Pesel = dane3, AvatarSrc = dane4 });

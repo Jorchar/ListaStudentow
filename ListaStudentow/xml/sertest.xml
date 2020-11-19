@@ -4,12 +4,12 @@
     <Imie>asd</Imie>
     <Wiek>123</Wiek>
     <Pesel>123</Pesel>
-    <AvatarSrc>C:\Users\Browarus\source\repos\ListaStudentow\ListaStudentow\bin\Debug\src\0.jpg</AvatarSrc>
+    <AvatarSrc>src\0.jpg</AvatarSrc>
   </Student>
   <Student>
     <Imie>dsa</Imie>
     <Wiek>321</Wiek>
     <Pesel>21</Pesel>
-    <AvatarSrc>C:\Users\Browarus\source\repos\ListaStudentow\ListaStudentow\bin\Debug\src\1.jpg</AvatarSrc>
+    <AvatarSrc>src\1.jpg</AvatarSrc>
   </Student>
 </ArrayOfStudent>

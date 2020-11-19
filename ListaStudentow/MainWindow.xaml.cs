@@ -87,7 +87,8 @@ namespace ListaStudentow
         }
         public static void kurdebele(int klucz)
         {
-            studenci[klucz].AvatarSrc = "C:\\Users\\Browarus\\source\\repos\\ListaStudentow\\ListaStudentow\\bin\\Debug\\src\\blad.jpg";
+            string zrobienieTegoWymagaloDuzoPracy = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            studenci[klucz].AvatarSrc = zrobienieTegoWymagaloDuzoPracy+"\\src\\blad.jpg";
 
         }
     }
