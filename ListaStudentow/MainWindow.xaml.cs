@@ -39,10 +39,19 @@ namespace ListaStudentow
         
         private void Button_Click2(object sender, RoutedEventArgs e)
         {
-            XmlSerializer ser = new XmlSerializer(typeof(List<Student>));
-            using (FileStream fs = new FileStream("../../xml/sertest.xml", FileMode.Create))
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
             {
-                    ser.Serialize(fs, studenci);
+                saveFileDialog.InitialDirectory = Environment.CurrentDirectory;
+                saveFileDialog.Filter = "XML Files (*.xml)|*xml";
+                if (saveFileDialog.ShowDialog() == true)
+                {
+                    XmlSerializer ser = new XmlSerializer(typeof(List<Student>));
+                    using (FileStream fs = new FileStream(saveFileDialog.FileName, FileMode.Create))
+                    {
+                        ser.Serialize(fs, studenci);
+                        fs.Close();
+                    }
+                }
             }
             MessageBox.Show("Zapisano listę do pliku XML w folderze projektu");
         }
@@ -50,6 +59,11 @@ namespace ListaStudentow
         private void listView_Click(object sender, MouseButtonEventArgs e)
         {
             var item = (sender as ListView).SelectedIndex;
+
+
+            uniStudents.ItemsSource = null;
+
+
             if (item > -1)
             {
                 Window2 win3 = new Window2(item);
@@ -66,16 +80,24 @@ namespace ListaStudentow
                 var mySerializer = new XmlSerializer(typeof(List<Student>));
                 var myFileStream = new FileStream(openFileDialog.FileName, FileMode.Open);
                 studenci = (List<Student>)mySerializer.Deserialize(myFileStream);
+                myFileStream.Close();
                 uniStudents.ItemsSource = null;
                 uniStudents.ItemsSource = studenci;
             }
+        }
+        public static void kurdebele(int klucz)
+        {
+            studenci[klucz].AvatarSrc = "C:\\Users\\Browarus\\source\\repos\\ListaStudentow\\ListaStudentow\\bin\\Debug\\src\\blad.jpg";
+
         }
     }
 }
 public class Student
 {
+    
     public string Imie { get; set; }
     public string Wiek { get; set; }
     public string Pesel { get; set; }
     public string AvatarSrc { get; set; }
+
 }

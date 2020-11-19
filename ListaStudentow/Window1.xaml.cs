@@ -37,8 +37,19 @@ namespace ListaStudentow
             dane1 = Imie.Text;
             dane2 = Wiek.Text;
             dane3 = PESEL.Text;
-            dane4 = Avatar.Source.ToString();
-            if(dane2.All(char.IsNumber) && dane3.All(char.IsNumber) && dane1.All(char.IsLetter)){
+
+            var encoder = new JpegBitmapEncoder();
+            encoder.Frames.Add(BitmapFrame.Create(Avatar.Source as BitmapImage));
+            encoder.QualityLevel = 100;
+            using (var stream = new FileStream("src\\" + MainWindow.studenci.Count + ".jpg", FileMode.Create))
+            {
+                encoder.Save(stream);
+                stream.Close();
+            }
+            string zrobienieTegoWymagaloDuzoPracy = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            dane4 = zrobienieTegoWymagaloDuzoPracy + "\\src\\" + MainWindow.studenci.Count + ".jpg";
+
+            if (dane2.All(char.IsNumber) && dane3.All(char.IsNumber) && dane1.All(char.IsLetter)){
                 MainWindow.studenci.Add(new Student() { Imie = dane1, Wiek = dane2, Pesel = dane3, AvatarSrc = dane4 });
             }
             else
@@ -54,17 +65,7 @@ namespace ListaStudentow
             if (openFileDialog.ShowDialog() == true)
             {
                 Uri fileUri = new Uri(openFileDialog.FileName);
-                BitmapImage zdjecie = new BitmapImage(fileUri);
-                var encoder = new JpegBitmapEncoder();
-                encoder.Frames.Add(BitmapFrame.Create(zdjecie));
-                encoder.QualityLevel = 100;
-                using (var stream = new FileStream("src/" + MainWindow.studenci.Count + ".jpg", FileMode.Create))
-                {
-                    encoder.Save(stream);
-                }
-                string zrobienieTegoWymagaloDuzoPracy = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-                Uri fileUri2 = new Uri(zrobienieTegoWymagaloDuzoPracy + "/src/" + MainWindow.studenci.Count + ".jpg");
-                Avatar.Source = new BitmapImage(fileUri2);
+                Avatar.Source = new BitmapImage(fileUri);
             }
         }
     }

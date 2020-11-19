@@ -25,48 +25,79 @@ namespace ListaStudentow
     /// </summary>
     public partial class Window2 : Window
     {
+        int klucz;
+        BitmapImage bi2 = new BitmapImage();
+        Image Avatar = new Image();
         public Window2(int item)
         {
-            int klucz = item;
+            klucz = item;
             InitializeComponent();
+            try
+            {
+                StackPanel1.Children.RemoveAt(0);
+            }
+            catch (System.ArgumentOutOfRangeException)
+            {
+
+            }
+            BitmapImage bi = new BitmapImage();
             Imie.Text = MainWindow.studenci[klucz].Imie;
             Wiek.Text = MainWindow.studenci[klucz].Wiek;
             PESEL.Text = MainWindow.studenci[klucz].Pesel;
-            BitmapImage zdjecie = new BitmapImage();
-            zdjecie.BeginInit();
-            zdjecie.UriSource = new Uri(MainWindow.studenci[klucz].AvatarSrc);
-            zdjecie.EndInit();
-            Avatar.Source = zdjecie;
-            x.Content = klucz;
+            bi.UriSource = null;
+            bi.BeginInit();
+            bi.CacheOption = BitmapCacheOption.OnLoad;
+            bi.UriSource = new Uri(MainWindow.studenci[klucz].AvatarSrc);
+            bi.EndInit();
+            Avatar.Source = bi;
+            StackPanel1.Children.Add(Avatar);
         }
 
         private void ZmodujStudenta(object sender, RoutedEventArgs e)
         {
-            MainWindow.studenci[Convert.ToInt32(x.Content)].Imie = Imie.Text;
-            MainWindow.studenci[Convert.ToInt32(x.Content)].Wiek = Wiek.Text;
-            MainWindow.studenci[Convert.ToInt32(x.Content)].Pesel = PESEL.Text;
-            MainWindow.studenci[Convert.ToInt32(x.Content)].AvatarSrc = Avatar.Source.ToString();
+            MainWindow.studenci[klucz].Imie = Imie.Text;
+            MainWindow.studenci[klucz].Wiek = Wiek.Text;
+            MainWindow.studenci[klucz].Pesel = PESEL.Text;
+            MainWindow.kurdebele(klucz);
+            var encoder = new JpegBitmapEncoder();
+            encoder.Frames.Add(BitmapFrame.Create(Avatar.Source as BitmapImage));
+            encoder.QualityLevel = 100;
+
+            StackPanel1.Children.RemoveAt(0);
+
+            GC.Collect();
+            try
+            {
+                using (var stream = new FileStream("src/" + klucz + ".jpg", FileMode.Create))
+                {
+                    encoder.Save(stream);
+                    stream.Close();
+                }
+            }
+            catch (System.IO.IOException)
+            {
+                MessageBox.Show("Obraz jest aktualnie uzywany przez inny program i nie można go skopiowac");
+            }
+            string zrobienieTegoWymagaloDuzoPracy = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            Uri fileUri2 = new Uri(zrobienieTegoWymagaloDuzoPracy + "/src/" + klucz + ".jpg");
+            MainWindow.studenci[klucz].AvatarSrc = zrobienieTegoWymagaloDuzoPracy + "/src/" + klucz + ".jpg";
             this.Close();
         }
 
         private void DodajObraz(object sender, RoutedEventArgs e)
         {
+            
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Image files (*.png;*.jpeg;*.jpg)|*.png;*.jpeg;*.jpg|All files (*.*)|*.*";
             if (openFileDialog.ShowDialog() == true)
             {
-                Uri fileUri = new Uri(openFileDialog.FileName);
-                BitmapImage zdjecie = new BitmapImage(fileUri);
-                var encoder = new JpegBitmapEncoder();
-                encoder.Frames.Add(BitmapFrame.Create(zdjecie));
-                encoder.QualityLevel = 100;
-                using (var stream = new FileStream("src/" + MainWindow.studenci.Count + ".jpg", FileMode.Create))
-                {
-                    encoder.Save(stream);
-                }
-                string zrobienieTegoWymagaloDuzoPracy = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-                Uri fileUri2 = new Uri(zrobienieTegoWymagaloDuzoPracy + "/src/" + MainWindow.studenci.Count + ".jpg");
-                Avatar.Source = new BitmapImage(fileUri2);
+                bi2.BeginInit();
+                bi2.CacheOption = BitmapCacheOption.OnLoad;
+                bi2.UriSource = new Uri(openFileDialog.FileName);
+                bi2.EndInit();
+                this.StackPanel1.Children.RemoveAt(0);
+                this.StackPanel1.Children.Add(Avatar);
+                Avatar.Source = bi2;
             }
         }
     }
