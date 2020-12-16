@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -38,18 +39,26 @@ namespace ListaStudentow
             dane2 = Wiek.Text;
             dane3 = PESEL.Text;
 
-            var encoder = new JpegBitmapEncoder();
-            encoder.Frames.Add(BitmapFrame.Create(Avatar.Source as BitmapImage));
-            encoder.QualityLevel = 100;
-            using (var stream = new FileStream("src\\" + MainWindow.studenci.Count + ".jpg", FileMode.Create))
+            if(Regex.IsMatch(dane3, @"^\d{11}$") && Regex.IsMatch(dane2, @"^\p{N}\p{N}*$") && Regex.IsMatch(dane1, @"^\p{L}\p{L}*$"))
             {
-                encoder.Save(stream);
-                stream.Close();
-            }
-            string zrobienieTegoWymagaloDuzoPracy = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-            dane4 = "src\\" + MainWindow.studenci.Count + ".jpg";
+                if(Avatar.Source != null)
+                {
+                    var encoder = new JpegBitmapEncoder();
+                    encoder.Frames.Add(BitmapFrame.Create(Avatar.Source as BitmapImage));
+                    encoder.QualityLevel = 100;
+                    using (var stream = new FileStream("src\\" + MainWindow.studenci.Count + ".jpg", FileMode.Create))
+                    {
+                        encoder.Save(stream);
+                        stream.Close();
+                    }
+                    string zrobienieTegoWymagaloDuzoPracy = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+                    dane4 = "src\\" + MainWindow.studenci.Count + ".jpg";
+                }
+                else
+                {
+                    dane4 = "src\\blad.jpg";
+                }
 
-            if (dane2.All(char.IsNumber) && dane3.All(char.IsNumber) && dane1.All(char.IsLetter)){
                 MainWindow.studenci.Add(new Student() { Imie = dane1, Wiek = dane2, Pesel = dane3, AvatarSrc = dane4 });
             }
             else
@@ -67,6 +76,17 @@ namespace ListaStudentow
                 Uri fileUri = new Uri(openFileDialog.FileName);
                 Avatar.Source = new BitmapImage(fileUri);
             }
+        }
+        private void CheckKey(object sender, TextCompositionEventArgs e)
+        {
+            if (!Regex.IsMatch(e.Text, @"^\p{N}"))
+            e.Handled = true;
+        }
+
+        private void CheckKey2(object sender, TextCompositionEventArgs e)
+        {
+            if (!Regex.IsMatch(e.Text, @"^\p{L}"))
+                e.Handled = true;
         }
     }
 }

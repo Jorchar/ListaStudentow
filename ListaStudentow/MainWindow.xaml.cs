@@ -100,5 +100,5 @@ public class Student
     public string Wiek { get; set; }
     public string Pesel { get; set; }
     public string AvatarSrc { get; set; }
-
+    //Witam
 }

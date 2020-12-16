@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Automation.Peers;
@@ -56,32 +57,39 @@ namespace ListaStudentow
 
         private void ZmodujStudenta(object sender, RoutedEventArgs e)
         {
-            MainWindow.studenci[klucz].Imie = Imie.Text;
-            MainWindow.studenci[klucz].Wiek = Wiek.Text;
-            MainWindow.studenci[klucz].Pesel = PESEL.Text;
-            MainWindow.kurdebele(klucz);
-            var encoder = new JpegBitmapEncoder();
-            encoder.Frames.Add(BitmapFrame.Create(Avatar.Source as BitmapImage));
-            encoder.QualityLevel = 100;
-
-            StackPanel1.Children.RemoveAt(0);
-
-            GC.Collect();
-            try
+            if (Regex.IsMatch(PESEL.Text, @"^\d{11}$") && Regex.IsMatch(Wiek.Text, @"^\p{N}\p{N}*$") && Regex.IsMatch(Imie.Text, @"^\p{L}\p{L}*$"))
             {
-                using (var stream = new FileStream("src/" + klucz + ".jpg", FileMode.Create))
+                MainWindow.studenci[klucz].Imie = Imie.Text;
+                MainWindow.studenci[klucz].Wiek = Wiek.Text;
+                MainWindow.studenci[klucz].Pesel = PESEL.Text;
+                MainWindow.kurdebele(klucz);
+                var encoder = new JpegBitmapEncoder();
+                encoder.Frames.Add(BitmapFrame.Create(Avatar.Source as BitmapImage));
+                encoder.QualityLevel = 100;
+
+                StackPanel1.Children.RemoveAt(0);
+
+                GC.Collect();
+                try
                 {
-                    encoder.Save(stream);
-                    stream.Close();
+                    using (var stream = new FileStream("src/" + klucz + ".jpg", FileMode.Create))
+                    {
+                        encoder.Save(stream);
+                        stream.Close();
+                    }
                 }
+                catch (System.IO.IOException)
+                {
+                    MessageBox.Show("Obraz jest aktualnie uzywany przez inny program i nie można go skopiowac");
+                }
+                string zrobienieTegoWymagaloDuzoPracy = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+                MainWindow.studenci[klucz].AvatarSrc = "src\\" + klucz + ".jpg";
+                this.Close();
             }
-            catch (System.IO.IOException)
+            else
             {
-                MessageBox.Show("Obraz jest aktualnie uzywany przez inny program i nie można go skopiowac");
+                MessageBox.Show("Wprowadz poprawne dane");
             }
-            string zrobienieTegoWymagaloDuzoPracy = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-            MainWindow.studenci[klucz].AvatarSrc = "src\\" + klucz + ".jpg";
-            this.Close();
         }
 
         private void DodajObraz(object sender, RoutedEventArgs e)
@@ -99,6 +107,18 @@ namespace ListaStudentow
                 this.StackPanel1.Children.Add(Avatar);
                 Avatar.Source = bi2;
             }
+        }
+
+        private void CheckKey2(object sender, TextCompositionEventArgs e)
+        {
+            if (!Regex.IsMatch(e.Text, @"^\p{L}"))
+                e.Handled = true;
+        }
+
+        private void CheckKey(object sender, TextCompositionEventArgs e)
+        {
+            if (!Regex.IsMatch(e.Text, @"^\p{N}"))
+                e.Handled = true;
         }
     }
 }

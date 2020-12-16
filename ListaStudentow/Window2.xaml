@@ -21,9 +21,9 @@
             <RowDefinition Height="3*"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <TextBox Grid.Column="2" Grid.Row="1" Name="Imie" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="26" Width="220"></TextBox>
-        <TextBox Grid.Column="2" Grid.Row="2" Name="Wiek" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="26" Width="220"></TextBox>
-        <TextBox Grid.Column="2" Grid.Row="3" Name="PESEL" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="26" Width="220"></TextBox>
+        <TextBox Grid.Column="2" Grid.Row="1" Name="Imie" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="26" Width="220" PreviewTextInput="CheckKey2"></TextBox>
+        <TextBox Grid.Column="2" Grid.Row="2" Name="Wiek" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="26" Width="220" PreviewTextInput="CheckKey"></TextBox>
+        <TextBox Grid.Column="2" Grid.Row="3" Name="PESEL" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="26" Width="220" PreviewTextInput="CheckKey" MaxLength="11"></TextBox>
         <StackPanel Name="StackPanel1" Grid.Column="1" Grid.Row="4">
         </StackPanel>
 
