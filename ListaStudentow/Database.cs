@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Data;
+using Microsoft.SqlServer.Server;
 
 namespace ListaStudentow
 {
@@ -62,28 +63,48 @@ namespace ListaStudentow
         }
         public static void saveBase(string dana1, string dana2, string dana3, string dana4, string indeks, string update)
         {
-            SqlParameter[] pms = new SqlParameter[5];
-            pms[0] = new SqlParameter("@dana1", SqlDbType.VarChar);
-            pms[0].Value = dana1;
-
-            pms[1] = new SqlParameter("@dana2", SqlDbType.VarChar);
-            pms[1].Value = dana2;
-
-            pms[2] = new SqlParameter("@dana3", SqlDbType.VarChar);
-            pms[2].Value = dana3;
-
-            pms[3] = new SqlParameter("@dana4", SqlDbType.VarChar);
-            pms[3].Value = dana4;
-
-            pms[4] = new SqlParameter("@indeks", SqlDbType.VarChar);
-            pms[4].Value = indeks;
-
-
             command = new SqlCommand();
-
             command.CommandType = CommandType.StoredProcedure;
             command.CommandText = update;
             command.Connection = cnn;
+
+            SqlParameter pms0 = new SqlParameter();
+            SqlParameter pms1 = new SqlParameter();
+            SqlParameter pms2 = new SqlParameter();
+            SqlParameter pms3 = new SqlParameter();
+            SqlParameter pms4 = new SqlParameter();
+
+            pms0.Value = dana1;
+            pms0.Direction = ParameterDirection.Input;
+            pms0.DbType = DbType.String;
+            pms0.ParameterName = "@dana1";
+
+
+            pms1.Value = dana2;
+            pms1.Direction = ParameterDirection.Input;
+            pms1.DbType = DbType.String;
+            pms1.ParameterName = "@dana2";
+
+            pms2.Value = dana3;
+            pms2.Direction = ParameterDirection.Input;
+            pms2.DbType = DbType.String;
+            pms2.ParameterName = "@dana3";
+
+            pms3.Value = dana4;
+            pms3.Direction = ParameterDirection.Input;
+            pms3.DbType = DbType.String;
+            pms3.ParameterName = "@dana4";
+
+            pms4.Value = indeks;
+            pms4.Direction = ParameterDirection.Input;
+            pms4.DbType = DbType.String;
+            pms4.ParameterName = "@indeks";
+
+            command.Parameters.Add(pms0);
+            command.Parameters.Add(pms1);
+            command.Parameters.Add(pms2);
+            command.Parameters.Add(pms3);
+            command.Parameters.Add(pms4);
 
             adapter = new SqlDataAdapter(command);
             dataTable = new DataTable("studenci");

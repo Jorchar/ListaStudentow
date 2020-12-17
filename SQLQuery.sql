@@ -34,12 +34,12 @@ INSERT INTO ListaStudentow.dbo.studenci([Imie], [Wiek], [Pesel], [Kierunek], [Av
 ('Stefan', 23, 99249873612, 'Prawo', 'src\1.jpg'),
 ('Daria', 22, 99080811120, 'Fizyka', 'src\1.jpg');
 
-CREATE PROCEDURE AKTUALIZUJ @dana1 varchar, @dana2 int, @indeks bigint, @dana3 varchar, @dana4 varchar
+CREATE PROCEDURE dbo.AKTUALIZUJ @dana1 varchar(200), @dana2 int, @indeks bigint, @dana3 varchar(200), @dana4 varchar(200)
 AS
-UPDATE ListaStudentow.dbo.studenci SET [Imie]=@dana1, [Wiek]=@dana2, [Pesel]=@indeks, [Kierunek]=@dana3, [AvatarSrc]=@dana4;
+UPDATE ListaStudentow.dbo.studenci SET [Imie]=@dana1, [Wiek]=@dana2, [Pesel]=@indeks, [Kierunek]=@dana3, [AvatarSrc]=@dana4 WHERE [Pesel]=@indeks;
 GO
 
-CREATE PROCEDURE DOPISZ @dana1 varchar, @dana2 int, @indeks bigint, @dana3 varchar, @dana4 varchar
+CREATE PROCEDURE dbo.DOPISZ @dana1 varchar(200), @dana2 int, @indeks bigint, @dana3 varchar(200), @dana4 varchar(200)
 AS
 INSERT INTO ListaStudentow.dbo.studenci([Imie], [Wiek], [Kierunek], [Pesel], [AvatarSrc]) VALUES (@dana1, @dana2, @dana3, @indeks, @dana4);
 GO
