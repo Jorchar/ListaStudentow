@@ -29,6 +29,7 @@
         </ListView>
         <Button Click="Button_Click" Grid.Column="1" Grid.Row="2" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Right">Refresh</Button>
         <Button Click="Button_Click1" Grid.Column="1" Grid.Row="2" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Left">Odczytaj</Button>
-        <Button Click="Button_Click2" Grid.Column="1" Grid.Row="2" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center">Zapisz</Button>
+        <Button Click="Button_Click2" Grid.Column="1" Grid.Row="2" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="180,19,400,19">Zapisz</Button>
+        <Button Click="Button_Click3" Grid.Column="1" Grid.Row="2" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="380,19,170,19">Baza SQL</Button>
     </Grid>
 </Window>

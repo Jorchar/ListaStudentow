@@ -91,11 +91,18 @@ namespace ListaStudentow
             studenci[klucz].AvatarSrc = zrobienieTegoWymagaloDuzoPracy+"\\src\\blad.jpg";
 
         }
+
+        private void Button_Click3(object sender, RoutedEventArgs e)
+        {
+            Database.openConnection();
+            MessageBox.Show("Connection Open!");
+            Window3 window3 = new Window3();
+            window3.Show();
+        }
     }
 }
 public class Student
 {
-    
     public string Imie { get; set; }
     public string Wiek { get; set; }
     public string Pesel { get; set; }
