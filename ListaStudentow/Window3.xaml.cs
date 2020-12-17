@@ -57,16 +57,15 @@ namespace ListaStudentow
                     break;
                 }
 
-                update = "INSERT INTO studenci([Imie], [Wiek], [Kierunek], [Pesel], [AvatarSrc]) VALUES ('" + dana1 + "', '" + dana2 + "', '" + dana3 + "', '" + index + "', '" + dana4 + "')";
-
                 try
                 {
-                    Database.saveBase(update);
+                    update = "dbo.DOPISZ";
+                    Database.saveBase(dana1, dana2, dana3, dana4, index, update);
                 }
                 catch (System.Data.SqlClient.SqlException)
                 {
-                    update = "UPDATE studenci SET [Imie] = '" + dana1 + "', [Wiek] = '" + dana2 + "', [Kierunek] = '" + dana3 + "', [AvatarSrc] = '" + dana4 + "' from studenci WHERE [Pesel]='" + index + "'";
-                    Database.saveBase(update);
+                    update = "dbo.AKTUALIZUJ";
+                    Database.saveBase(dana1, dana2, dana3, dana4, index, update);
                 }
                 x++;
             }
